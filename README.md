@@ -1,2 +1,2 @@
 # Portalumni
-Portalumni Website
+This is the repository of the Portalumni website.
