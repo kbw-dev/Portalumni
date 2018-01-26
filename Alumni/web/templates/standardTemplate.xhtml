@@ -11,16 +11,25 @@
     </h:head>
 
     <h:body>
-        <div id="container">
-            <div id="header">
-                <ui:insert name="header"></ui:insert>
-            </div>
+        <section id="container">
+            <nav>
+                <ul>
+                    <li><a href="#" class="align-right">Login</a></li>
+                    <li><a href="#" class="align-right">Fotogalerie</a></li>
+                    <li><a href="#" class="align-right">Events</a></li>
+                    <li><a href="#" class="align-right">News</a></li>
+                    <li><a href="#" id="active" class="align-right">Home</a></li>
+                </ul>
+            </nav>
 
             <div id="content">
                 <ui:insert name="content"></ui:insert>
             </div>
-            <div id="footer"><p>Portalumni 2018</p></div>
-        </div>
+            
+            <footer>
+                <p>@TODO</p>
+            </footer>
+        </section>
     </h:body>
 
 </html>
