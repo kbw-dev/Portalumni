@@ -1,0 +1,119 @@
+/* 
+    Created on  : Dec 22, 2017
+    Last update : Jan 11, 2018
+    Author      : Eduard Munteanu
+*/
+@charset "utf-8";
+
+body {
+    margin: 0px;
+    font-family: Verdana, sans-serif;
+    background-color: #DCDCDC;
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+li a {
+    background-color: #040531;
+    color: #F9F9F9;
+    display: block;
+    height: 25px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    font-style: normal;
+    padding: 15px 25px;
+    transition: 0.2s linear;
+}
+
+li a:hover {
+    background-color: #F9F9F9;
+    color: #0A0A0A;
+    transition: background-color 0.2s linear;
+}
+
+p {
+
+}
+
+ul {
+    background-color: #040531;
+    list-style-type: none;
+    margin: 0px;
+    overflow: hidden;
+    padding: 0px;
+}
+
+#active {
+    text-decoration: none;
+    background-color: #F9F9F9;
+    color: #0A0A0A;
+}
+
+
+#container {
+    background-color: #F9F9F9;
+    position: relative;
+    width: 1100px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    min-height: 500px;
+    height: calc(100vh - 65px);
+    font-size: 15px;
+}
+
+#content {
+    position: relative;
+    margin: 5px;
+}
+
+#footer {
+    position: relative;
+    background-color: #DCDCDC;
+    height: 15px;
+    width: 1100px;
+}
+
+#footer p {
+    color: #A0A0A0;
+    font-size: 12px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.align-left {
+    float: left;
+}
+
+.align-right {
+    float: right;
+}
+
+.infobox1 {
+
+}
+
+.infobox2 {
+
+}
+
+.infobox3 {
+
+}
+
+.infobox4 {
+
+}
