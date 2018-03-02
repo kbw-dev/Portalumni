@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02.03.2018 08:21:54 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="data.Benutzer" table="benutzer" catalog="db_portalumni" optimistic-lock="version">
+        <composite-id name="id" class="data.BenutzerId">
+            <key-property name="idBenutzer" type="int">
+                <column name="idBenutzer" />
+            </key-property>
+            <key-property name="firmenVerwaltungIdFirmenVerwaltung" type="int">
+                <column name="FirmenVerwaltung_idFirmenVerwaltung" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="firmenverwaltung" class="data.Firmenverwaltung" update="false" insert="false" fetch="select">
+            <column name="FirmenVerwaltung_idFirmenVerwaltung" not-null="true" />
+        </many-to-one>
+        <property name="vorname" type="string">
+            <column name="Vorname" length="45" not-null="true" />
+        </property>
+        <property name="nachname" type="string">
+            <column name="Nachname" length="45" not-null="true" />
+        </property>
+        <property name="passwort" type="string">
+            <column name="Passwort" length="45" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="Email" length="45" not-null="true" />
+        </property>
+        <property name="admin" type="boolean">
+            <column name="Admin" not-null="true" />
+        </property>
+        <property name="newsletter" type="boolean">
+            <column name="Newsletter" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -41,8 +41,12 @@ Contributor(s):
 -->
 <hibernate-configuration>
   <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/alumni?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/db_portalumni</property>
     <property name="hibernate.connection.username">root</property>
+    <mapping resource="data/Benutzer.hbm.xml"/>
+    <mapping resource="data/Firma.hbm.xml"/>
+    <mapping resource="data/Firmenverwaltung.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
