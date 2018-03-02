@@ -15,7 +15,19 @@
     </ui:define>
 
     <ui:define name="content">
-        <p>Fotogalerie Seite</p>
+        <p>Login Seite</p>
+        <h:outputText style="font-weight:bold" value="Login" />
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="Name: " />
+                <h:inputText value="#{loginController.name}" />
+
+                <h:outputText value="Password: " />
+                <h:inputSecret value="#{loginController.password}" />
+
+            </h:panelGrid>
+            <h:commandButton action="#{loginController.checkUser()}" value="Login"/>
+        </h:form>
     </ui:define>
 
 </ui:composition>
