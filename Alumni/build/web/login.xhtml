@@ -3,13 +3,13 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./templates/standardTemplate.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+                xmlns:h="http://xmlns.jcp.org/jsf/html">>
 
     <ui:define name="header">
         <h:form>
             <nav>
                 <ul>
-                    <li><a href="#" id="active" class="align-left">Home</a></li>
+                    <li><a href="login.xhtml"  class="align-left">Home</a></li>
                     <li><a href="#" class="align-left">News</a></li>
                     <li><a href="#" class="align-left">Events</a></li>
                     <li><a href="#" class="align-left">Fotogalerie</a></li>
@@ -20,10 +20,18 @@
     </ui:define>
 
     <ui:define name="content">
-        <p>test test test</p>
-        <p>test test test</p>
-        <p>test test test</p>
-        <p>test test test</p>
+        <h:outputText style="font-weight:bold" value="Login" />
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="Name: " />
+                <h:inputText value="#{loginController.name}" />
+
+                <h:outputText value="Password: " />
+                <h:inputSecret value="#{loginController.password}" />
+
+            </h:panelGrid>
+            <h:commandButton action="#{loginController.checkUser()}" value="Login"/>
+        </h:form>
     </ui:define>
 
 </ui:composition>
