@@ -1,18 +1,13 @@
 package ch.kbw.alumni;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Random;
-
-//import javax.faces.bean.SessionScoped;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 
 
 @Named
-@ManagedBean(name = "user")
 @SessionScoped
 public class LoginController implements Serializable {
 

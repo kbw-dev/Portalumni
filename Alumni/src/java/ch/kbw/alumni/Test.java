@@ -5,10 +5,7 @@
  */
 package ch.kbw.alumni;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -20,12 +17,12 @@ import javax.inject.Named;
 @SessionScoped
 public class Test implements Serializable {
 
-    String text,output, script;
+    String text, output, script;
 
     public void exception() {
-        if(getText().equals("")){
-            
-        }else{
+        if (getText().equals("")) {
+
+        } else {
             setOutput(text);
         }
     }
@@ -53,6 +50,5 @@ public class Test implements Serializable {
     public void setOutput(String output) {
         this.output = output;
     }
-    
 
 }

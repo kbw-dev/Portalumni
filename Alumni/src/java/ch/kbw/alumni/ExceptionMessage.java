@@ -6,20 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 /**
  *
  * @author John Yeary
  * @version 1.0
  */
-@ManagedBean
-@RequestScoped
+@Named
+@SessionScoped
 public class ExceptionMessage {
 
     private final String linkName = "Union of Concerned Scientists";
