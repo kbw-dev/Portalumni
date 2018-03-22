@@ -4,7 +4,44 @@
     Author       : Eduard Munteanu
 */
 @charset "utf-8";
+.info1 {
+    left: 10px;
+}
 
-#info1, #info2, #info3, #info4 {
-    
+.info2 {
+    left: 282px;
+}
+
+.info3 {
+    right: 282px;
+}
+
+.info4 {
+    right: 10px;
+}
+
+.info1, .info2, .info3, .info4 {
+    background-color: #F9F9F9;
+    border: 1px solid gray;
+    bottom: 10px;
+    box-shadow: 0px 0px 3px #292929;
+    float: left;
+    height: 200px;
+    position: absolute;
+    transition: 0.2s linear;
+    width: 260px;
+}
+
+.info1 h3, .info2 h3, .info3 h3, .info4 h3 {
+    color: #1F98BB;
+    margin: 5px;
+}
+
+.info1 p, .info2 p, .info3 p, .info4 p {
+    margin: 5px;
+}
+
+.info1:hover, .info2:hover, .info3:hover, .info4:hover {
+    height: 300px;
+    transition: 0.2s linear;
 }

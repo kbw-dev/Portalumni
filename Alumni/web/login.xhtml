@@ -2,17 +2,17 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./templates/standardTemplate.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="./templates/standardTemplate.xhtml">
 
     <ui:define name="nav">
-        <li><a href="#" id="active" class="align-right">Login</a></li>
-        <li><a href="fotogalerie.xhtml" class="align-right">Fotogalerie</a></li>
-        <li><a href="events.xhtml" class="align-right">Events</a></li>
-        <li><a href="news.xhtml" class="align-right">News</a></li>
-        <li><a href="index.xhtml" class="align-right">Home</a></li>
+        <li><h:link id="active" class="align-right" value="Login" outcome="login" /></li>
+        <li><h:link class="align-right" value="Fotogalerie" outcome="fotogalerie" /></li>
+        <li><h:link class="align-right" value="Events" outcome="events" /></li>
+        <li><h:link class="align-right" value="News" outcome="news" /></li>
+        <li><h:link class="align-right" value="Home" outcome="index" /></li>
     </ui:define>
 
     <ui:define name="content">
