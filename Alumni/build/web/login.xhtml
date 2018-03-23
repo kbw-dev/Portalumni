@@ -27,9 +27,10 @@
                 <h:inputSecret value="#{loginController.password}" />
             </h:panelGrid>
             <h:commandButton action="#{loginController.checkUser()}" value="Login"/>
+            <p style="color:red;">#{loginController.message}</p>
             <br></br>
             <!-- Adels Teil -->
-            <h:commandButton action="#{loginService.goToMailing()}" value="Mailing"/>
+<!--            <h:commandButton action="#{loginService.goToMailing()}" value="Mailing"/>
             <h:commandButton action="#{loginService.goToSettings()}" value="Einstellungen"/>
              <h:dataTable var="user" value="#{userService.selectAllUser()}">
             <h:column>
@@ -45,7 +46,7 @@
                 <h:outputText value="#{user.lastName}" />
             </h:column>
 
-        </h:dataTable>
+        </h:dataTable>-->
         </h:form>
         
     </ui:define>
