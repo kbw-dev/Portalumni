@@ -45,9 +45,12 @@ public class LoginController implements Serializable {
 
         if (checkAccount() && !getName().equals("")) {
             isLoggedIn = true;
+            message = "Sie sind eingeloggt!";
+            return "index.xhtml?faces-redirect=true";
+        } else {
+            message = "Ihr Loginname oder Ihr Passwort ist falsch!";
+            return "login.xhtml?faces-redirect=true";
         }
-        message = "Ihr Loginname oder Ihr Passwort ist falsch!";
-        return "login.xhtml?faces-redirect=true";
     }
 
     public String logout() {
