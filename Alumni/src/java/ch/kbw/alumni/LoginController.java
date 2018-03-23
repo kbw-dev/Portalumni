@@ -1,6 +1,12 @@
 package ch.kbw.alumni;
 
+import ch.kbw.dao.UserDAO;
+import ch.kbw.model.User;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -21,8 +27,10 @@ public class LoginController implements Serializable {
 	private String output, property, progress;
 	private boolean hide = true;
 	int i = 0;
+        UserDAO userDao = new UserDAO();
+        ArrayList<User> users = new ArrayList<>();
 
-	public LoginController() {
+	public LoginController() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
 		super();
 		name = null;
 		password = null;
@@ -30,7 +38,7 @@ public class LoginController implements Serializable {
 		//adresse.add(new Address(0, "", ""));
 		message = "";
 		count = 0;
-		setProgress("0%");
+		users = (ArrayList<User>) userDao.getAllUsers();
 	}
 
 	// Methodes
@@ -120,14 +128,15 @@ public class LoginController implements Serializable {
 //	}
 
 	private boolean checkAccout() {
-//		if (adresse.size() != 0) {
-//			for (Address adress : adresse) {
-//				System.out.println(adress.getName());
-//				if (getName().equals(adress.getName()) && getPassword().equals(adress.getPassword())) {
-//					return true;
-//				}
-//			}
-//		}
+		if (users.size() != 0) {
+			for (User user : users) {
+				System.out.println(user.getUserName());
+				if (getName().equals(user.getUserName()) && getPassword().equals(user.getPassword())) {
+					return true;
+				}
+			}
+		}
+                
 		return false;
 
 	}

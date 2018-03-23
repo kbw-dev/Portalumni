@@ -51,7 +51,6 @@ public class UserDAO implements Serializable {
         } catch (ClassNotFoundException e) {
             log.info("No JDBC Driver found ...");
             e.printStackTrace();
-
         }
 
         log.info("EVERYTHING OKAY WITH DRIVER");
