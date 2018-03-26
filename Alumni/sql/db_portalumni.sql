@@ -27,6 +27,9 @@ SET time_zone = "+00:00";
 --
 -- Tabellenstruktur für Tabelle `benutzer`
 --
+DROP DATABASE IF EXISTS db_portalumni;
+CREATE DATABASE db_portalumni;
+USE db_portalumni;
 
 CREATE TABLE `benutzer` (
   `userID` int(10) UNSIGNED NOT NULL,
