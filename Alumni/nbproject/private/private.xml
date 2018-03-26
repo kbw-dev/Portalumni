@@ -3,11 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Adel/Documents/NetBeansProjects/Web/Portalumni/Alumni/src/java/ch/kbw/control/MailService.java</file>
             <file>file:/C:/Users/Adel/Documents/NetBeansProjects/Web/Portalumni/Alumni/src/java/ch/kbw/alumni/LoginController.java</file>
             <file>file:/C:/Users/Adel/Documents/NetBeansProjects/Web/Portalumni/Alumni/src/java/ch/kbw/control/LoginService.java</file>
             <file>file:/C:/Users/Adel/Documents/NetBeansProjects/Web/Portalumni/Alumni/src/java/ch/kbw/control/SettingsService.java</file>
             <file>file:/C:/Users/Adel/Documents/NetBeansProjects/Web/Portalumni/Alumni/web/login.xhtml</file>
+=======
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/src/java/ch/kbw/control/LoginService.java</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/web/login.xhtml</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/src/java/ch/kbw/control/UserService.java</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/src/java/ch/kbw/alumni/LoginController.java</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/src/java/ch/kbw/dao/UserDAO.java</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/src/java/ch/kbw/control/MailService.java</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/src/java/ch/kbw/control/SettingsService.java</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/web/fotogalerie.xhtml</file>
+            <file>file:/C:/Users/Andy%20Nope/Documents/NetBeansProjects/Portalumni/Alumni/web/index.xhtml</file>
+>>>>>>> origin/dev
         </group>
     </open-files>
 </project-private>
