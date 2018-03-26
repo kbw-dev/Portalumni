@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -47,7 +48,7 @@ public class MailService {
         
         //MAIL SERVER SETTINGS
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp-mail.outlook.com");
+        props.put("mail.smtp.host", "server36.hostfactory.ch");
         props.put("mail.smtp.socketFactory.port", "587");
         props.put("mail.smtp.starttls.enable", true);
         props.put("mail.smtp.auth", true);
@@ -58,13 +59,13 @@ public class MailService {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(userDAO.getCurrentUser().getEmail(), userDAO.getCurrentUser().getEmailPassword());
+                return new PasswordAuthentication("info@portalumni.ch", "Ulgada66");
             }
         });
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(userDAO.getCurrentUser().getEmail()));
+            message.setFrom(new InternetAddress("info@portalumni.ch"));
             for (User c : newsletterReceivers) {
                 message.addRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(c.getEmail()));
@@ -81,6 +82,40 @@ public class MailService {
             throw new RuntimeException(e);
         }
 
+    }
+    
+    public void mailToAdmin(String subject, String content){
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "server36.hostfactory.ch");
+        props.put("mail.smtp.socketFactory.port", "587");
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "587");
+        
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("info@portalumni.ch", "Ulgada66");
+            }
+        });
+        
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("info@portalumni.ch"));
+            
+            message.addRecipients(Message.RecipientType.TO, InternetAddress.parse("lucian.nicca@stud.kbw.ch"));
+
+            message.setSubject(subject);
+            message.setText(content);
+
+            Transport.send(message);
+            System.out.println("Mail wurde gesendet.");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getMailContent() {

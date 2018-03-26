@@ -6,6 +6,12 @@
 package ch.kbw.control;
 
 import ch.kbw.dao.UserDAO;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 
 import javax.inject.Inject;
@@ -27,6 +33,12 @@ public class SettingsService {
     private String newPassword;
     private String againNewPassword;
     private boolean newsLetterChecked;
+    
+    private final String jdbcDriver = "com.mysql.jdbc.Driver";
+    private final String dbUrl = "jdbc:mysql://localhost/db_portalumni";
+    private final String caller = "root";
+    private final String password = "";
+    private Connection connection;
 
     public void saveSettings() {
 
@@ -38,7 +50,11 @@ public class SettingsService {
         
 
     }
-
+    
+    public void deleteUser(){
+        userDAO.deleteUser();
+    }
+    
     public String getNewEMail() {
         return newEMail;
     }

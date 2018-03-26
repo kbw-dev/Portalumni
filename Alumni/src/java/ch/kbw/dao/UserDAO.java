@@ -1,5 +1,6 @@
 package ch.kbw.dao;
 
+import ch.kbw.control.MailService;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,6 +19,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import ch.kbw.model.User;
+import java.sql.Statement;
 
 /**
  *
@@ -197,6 +199,20 @@ public class UserDAO implements Serializable {
         }
 
     }
+    
+    public void deleteUser() {
+        MailService ms = new MailService();
+        ms.mailToAdmin("User deleted his account", "User " + this.currentUser.getFirstName() + " " + this.currentUser.getLastName() + " with the username " + this.currentUser.getUserName() + " deleted his account. If you want to contact him, his last registered mail adress was: " + this.currentUser.getEmail());
+        String sql = "DELETE FROM benutzer WHERE userID = '" + this.getCurrentUser().getId() + "';";
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.execute(sql);
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public boolean notEmptyInput(String input) {
         if (!input.equals("")) {

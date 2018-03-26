@@ -29,15 +29,16 @@
             <h:outputLabel value="Neuer Username: "></h:outputLabel>
             <h:inputText id="newUserName" value="#{settingsService.newUserName}"></h:inputText>
             <br></br>
-            <h:form>
+<!--            <h:form>
             <h:panelGrid columns="2">         
-                <h:selectBooleanCheckbox value="#{settings.newsLetterChecked}">
+                <h:selectBooleanCheckbox value="#{settingsService.newsLetterChecked}">
                     <f:selectItem itemValue="1" itemLabel="check" />
                 </h:selectBooleanCheckbox>
             </h:panelGrid>
-        </h:form>
+        </h:form>-->
             
             <h:commandButton value="Änderungen speichern" type="submit" action="#{settingsService.saveSettings()}" />
+            <h:commandButton value="Konto löschen" type="submit" action="#{settingsService.deleteUser()}" />
         </h:form>
     </ui:define>
 </ui:composition>
