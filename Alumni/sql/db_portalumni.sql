@@ -1,11 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.7
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 23. Feb 2018 um 08:15
--- Server-Version: 10.1.10-MariaDB
--- PHP-Version: 5.6.15
+-- Erstellungszeit: 16. Mrz 2018 um 16:49
+-- Server-Version: 10.1.30-MariaDB
+-- PHP-Version: 7.2.2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -13,7 +19,7 @@
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `mydb`
+-- Datenbank: `db_portalumni`
 --
 
 -- --------------------------------------------------------
@@ -21,16 +27,16 @@
 --
 -- Tabellenstruktur für Tabelle `benutzer`
 --
-CREATE DATABASE db_portalumni;
-USE db_portalumni;
 
 CREATE TABLE `benutzer` (
-  `idBenutzer` int(10) UNSIGNED NOT NULL,
+  `userID` int(10) UNSIGNED NOT NULL,
   `FirmenVerwaltung_idFirmenVerwaltung` int(11) NOT NULL,
   `Vorname` varchar(45) NOT NULL,
   `Nachname` varchar(45) NOT NULL,
+  `Username` varchar(40) NOT NULL,
   `Passwort` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
+  `EmailPassword` varchar(100) NOT NULL,
   `Admin` tinyint(1) NOT NULL,
   `Newsletter` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -39,11 +45,12 @@ CREATE TABLE `benutzer` (
 -- Daten für Tabelle `benutzer`
 --
 
-INSERT INTO `benutzer` (`idBenutzer`, `FirmenVerwaltung_idFirmenVerwaltung`, `Vorname`, `Nachname`, `Passwort`, `Email`, `Admin`, `Newsletter`) VALUES
-(1, 1, 'Admin', 'Absolutum', 'Admin', 'Admin@Admin.ch', 1, 1),
-(2, 2, 'Silvan', 'Baach', 'Navlis3', 'Navlis@gmx.com', 0, 1),
-(3, 2, 'Hannes', 'Kannes', 'usg45', 'hannes@hotmail.ch', 0, 0),
-(4, 4, 'Markus Maria', 'Von Riedmatten', 'Rick&Morty99', 'MM99@gmail.com', 0, 1);
+INSERT INTO `benutzer` (`userID`, `FirmenVerwaltung_idFirmenVerwaltung`, `Vorname`, `Nachname`, `Username`, `Passwort`, `Email`, `EmailPassword`, `Admin`, `Newsletter`) VALUES
+(1, 1, 'Admin', 'Absolutum', 'adminCool', 'Admin', 'Admin@Admin.ch', '', 1, 1),
+(2, 2, 'Silvan', 'Baach', 'silvBaach', 'Navlis3', 'Navlis@gmx.com', '', 0, 1),
+(3, 2, 'Hannes', 'Kannes', 'hannkannes', 'usg45', 'hannes@hotmail.ch', '', 0, 0),
+(4, 4, 'Markus Maria', 'Von Riedmatten', 'markMaria', 'Rick&Morty99', 'MM99@gmail.com', '', 0, 1),
+(5, 5, 'Adel', 'Patkovic', 'adelooooo', 'adelo', 'adel9@hotmail.ch', 'platzhalter', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -99,7 +106,7 @@ INSERT INTO `firmenverwaltung` (`idFirmenVerwaltung`) VALUES
 -- Indizes für die Tabelle `benutzer`
 --
 ALTER TABLE `benutzer`
-  ADD PRIMARY KEY (`idBenutzer`,`FirmenVerwaltung_idFirmenVerwaltung`),
+  ADD PRIMARY KEY (`userID`,`FirmenVerwaltung_idFirmenVerwaltung`),
   ADD KEY `fk_Benutzer_FirmenVerwaltung_idx` (`FirmenVerwaltung_idFirmenVerwaltung`);
 
 --
@@ -132,6 +139,7 @@ ALTER TABLE `benutzer`
 --
 ALTER TABLE `firma`
   ADD CONSTRAINT `fk_Firma_FirmenVerwaltung1` FOREIGN KEY (`FirmenVerwaltung_idFirmenVerwaltung`) REFERENCES `firmenverwaltung` (`idFirmenVerwaltung`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
