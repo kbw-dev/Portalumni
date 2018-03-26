@@ -51,6 +51,7 @@ public class UserDAO implements Serializable {
         } catch (ClassNotFoundException e) {
             log.info("No JDBC Driver found ...");
             e.printStackTrace();
+
         }
 
         log.info("EVERYTHING OKAY WITH DRIVER");
@@ -109,6 +110,26 @@ public class UserDAO implements Serializable {
         return customers;
     }
 
+    public void changeSettingsNewsLetterChecked(boolean isNewsLetterChecked) {
+        if (!sameNewsLetterChecked(currentUser.wantsNewsletter(), isNewsLetterChecked)) {
+            PreparedStatement pst = null;
+            String query = "UPDATE benutzer "
+                    + "SET NEWSLETTERCHECKED = ? WHERE userID = ?";
+            try {
+                pst = connection.prepareStatement(query);
+                pst.setBoolean(1, isNewsLetterChecked);
+                pst.setInt(2, currentUser.getId());
+                currentUser.setNewsletter(isNewsLetterChecked);
+                pst.executeUpdate();
+                log.info("SUCESSFULLY UPDATED NEWSLETTERACTIVATION OF CURRENT USER: " + currentUser.getUserName());
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (sameNewsLetterChecked(currentUser.wantsNewsletter(), isNewsLetterChecked)) {
+            //Fehleranzeige "Gleiche wantsNewsLetter eingegeben"
+        }
+    }
+
     public void changeSettingsMail(String newEMail) {
         if (notEmptyInput(newEMail)) {
             if (!sameEMail(currentUser.getEmail(), newEMail)) {
@@ -135,7 +156,7 @@ public class UserDAO implements Serializable {
 
     public void changeSettingsPassword(String newPassword) {
         if (notEmptyInput(newPassword)) {
-            
+
             PreparedStatement pst = null;
             String query = "UPDATE benutzer "
                     + "SET Passwort = ? WHERE userID = ?";
@@ -169,7 +190,7 @@ public class UserDAO implements Serializable {
                 } catch (SQLException ex) {
                     Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else if(sameUserName(currentUser.getUserName(), newUsername)){
+            } else if (sameUserName(currentUser.getUserName(), newUsername)) {
                 // Fehlerannzeige "Gleicher Username eingegeben"
             }
 
@@ -205,6 +226,13 @@ public class UserDAO implements Serializable {
         return false;
     }
     //method for username that already exists in progress
+
+    public boolean sameNewsLetterChecked(boolean oldNewsLetterChecked, boolean newNewsLetterChecked) {
+        if (oldNewsLetterChecked == newNewsLetterChecked) {
+            return true;
+        }
+        return false;
+    }
 
     @PreDestroy
     public void destroy() {
