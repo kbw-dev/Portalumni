@@ -97,6 +97,7 @@ public class LoginController implements Serializable {
             for (User user : userDAO.getAllUsers()) {
                 System.out.println(user.getUserName());
                 if (getName().equals(user.getUserName()) && getPassword().equals(user.getPassword())) {
+                    userDAO.setCurrentUser(user);
                     return true;
                 }
             }
