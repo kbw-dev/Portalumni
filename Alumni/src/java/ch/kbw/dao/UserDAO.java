@@ -263,5 +263,9 @@ public class UserDAO implements Serializable {
     public User getCurrentUser() {
         return currentUser;
     }
+    
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
 
 }
