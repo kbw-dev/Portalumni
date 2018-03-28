@@ -106,9 +106,6 @@ public class MailService {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(sender));
 
-            message.addRecipients(Message.RecipientType.TO, InternetAddress.parse("erwin.eugster@kbw.ch"));
-            message.addRecipients(Message.RecipientType.TO, InternetAddress.parse("lena.hinnen@stud.kbw.ch"));
-            message.addRecipients(Message.RecipientType.TO, InternetAddress.parse("fabian.ulrich@stud.kbw.ch"));
             message.addRecipients(Message.RecipientType.TO, InternetAddress.parse("lucian.nicca@stud.kbw.ch"));
 
             message.setSubject(subject);

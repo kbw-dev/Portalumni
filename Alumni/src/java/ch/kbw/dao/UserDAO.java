@@ -15,18 +15,18 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import ch.kbw.model.User;
 import java.sql.Statement;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author Adel
  */
 @Named
-@RequestScoped
+@SessionScoped
 public class UserDAO implements Serializable {
 
     //FOR FURTHER INFORMATION, FOR TESTING

@@ -34,11 +34,7 @@ public class SettingsService {
     private String againNewPassword;
     private boolean newsLetterChecked;
     
-    private final String jdbcDriver = "com.mysql.jdbc.Driver";
-    private final String dbUrl = "jdbc:mysql://localhost/db_portalumni";
-    private final String caller = "root";
-    private final String password = "";
-    private Connection connection;
+    
 
     public void saveSettings() {
 
