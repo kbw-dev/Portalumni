@@ -57,6 +57,7 @@ li a:hover {
 }
 
 p {
+    font-size: 14px;
     margin: 0px;
 }
 
@@ -77,6 +78,13 @@ ul {
 
 .align-right {
     float: right;
+}
+
+.textbtn {
+    color: #0F00D1;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: bold;
 }
 
 #active {

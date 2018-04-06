@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./templates/standardTemplate.xhtml">
+
+    <ui:define name="nav">
+        <li><h:link id="active" class="align-right" value="Registrierung" outcome="registrierung" /></li>
+        <li><h:link class="align-right" value="Fotogalerie" outcome="fotogalerie" /></li>
+        <li><h:link class="align-right" value="Events" outcome="events" /></li>
+        <li><h:link class="align-right" value="News" outcome="news" /></li>
+        <li><h:link class="align-right" value="Home" outcome="index" /></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <center>
+            <h2><strong>Registrierung</strong></h2>
+            <br></br>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:panelGrid columns="2">
+                        <p style="width: 170px;">Vorname: </p>
+                        <!--<h:outputText value="Vorname: " /> -->
+                        <h:inputText style="width: 200px;" value="#{registrierungController.vorname}" a:placeholder="Vorname"/>
+                        <p style="width: 170px;">Nachname: </p>
+                        <!--<h:outputText value="Nachname: " /> -->
+                        <h:inputText style="width: 200px;" value="#{registrierungController.nachname}" a:placeholder="Nachname"/>
+                        <p style="width: 170px;">Email: </p>
+                        <!--<h:outputText value="Email: " /> -->
+                        <h:inputText style="width: 200px;" value="#{registrierungController.email}" a:placeholder="Email"/>
+                        <p style="width: 170px;">Passwort: </p>
+                        <!--<h:outputText value="Passwort: " /> -->
+                        <h:inputSecret style="width: 200px;" value="#{registrierungController.passwort1}" a:placeholder="Passwort"/>
+                        <p style="width: 170px;">Passwortbestätigung: </p>
+                        <!--<h:outputText value="Passwortbestätigung: " /> -->
+                        <h:inputSecret style="width: 200px;" value="#{registrierungController.passwort2}" a:placeholder="Passwortbestätigung"/>                   
+                    </h:panelGrid>
+                    <h:panelGrid style="border: 1px dotted; font-size: 12px; padding: 5px; width: 170px;">                      
+                        <h:outputText value="Passwortanforderungen:"/>
+                        <h:outputLabel value="- Mindestens 8 Zeichen lang"/>
+                        <h:outputLabel value="- Enthält Grossbuchstaben"/>
+                        <h:outputLabel value="- Enthält Kleinbuchstaben"/>
+                        <h:outputLabel value="- Enthält Zahlen"/>
+                        <h:outputLabel value="- Enthält Symbole"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <br></br>
+                <h:commandButton onclick="PF('dlg').show();" action="#{registrierungController.anfrageSenden()}" value="Registrieren"/>
+                <br></br>
+                <br></br>
+                    <h:outputText value="#{registrierungController.error}" style="color: red"/>
+                <br></br>
+                <br></br>
+                <p>Klicken Sie <h:link class="textbtn" value="hier" outcome="login" />, wenn Sie bereits ein Konto haben.</p>
+            </h:form>
+            <p:dialog showEffect="slide" widgetVar="dlg" dynamic="true" header="Registrierung" width="250" height="100" >
+                <h:outputText value="Vielen Dank für Ihre Registrierung. Ein Anfragemail wurde erfolgreich gesendet. Sie werden in den nächsten Tagen benachrichtigt." />
+            </p:dialog>
+        </center>
+    </ui:define>
+
+</ui:composition>

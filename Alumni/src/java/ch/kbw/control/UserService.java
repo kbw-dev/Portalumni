@@ -25,6 +25,7 @@ public class UserService implements Serializable {
     public List<User> selectAllUser(){
         return userDAO.getAllUsers();
     }
+    
 
     public UserDAO getUserDAO() {
         return userDAO;

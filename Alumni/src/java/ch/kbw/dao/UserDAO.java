@@ -1,5 +1,6 @@
 package ch.kbw.dao;
 
+import ch.kbw.control.MailService;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,17 +15,18 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import ch.kbw.model.User;
+import java.sql.Statement;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author Adel
  */
 @Named
-@RequestScoped
+@SessionScoped
 public class UserDAO implements Serializable {
 
     //FOR FURTHER INFORMATION, FOR TESTING
@@ -51,6 +53,7 @@ public class UserDAO implements Serializable {
         } catch (ClassNotFoundException e) {
             log.info("No JDBC Driver found ...");
             e.printStackTrace();
+
         }
 
         log.info("EVERYTHING OKAY WITH DRIVER");
@@ -109,6 +112,26 @@ public class UserDAO implements Serializable {
         return customers;
     }
 
+    public void changeSettingsNewsLetterChecked(boolean isNewsLetterChecked) {
+        if (!sameNewsLetterChecked(currentUser.wantsNewsletter(), isNewsLetterChecked)) {
+            PreparedStatement pst = null;
+            String query = "UPDATE benutzer "
+                    + "SET NEWSLETTERCHECKED = ? WHERE userID = ?";
+            try {
+                pst = connection.prepareStatement(query);
+                pst.setBoolean(1, isNewsLetterChecked);
+                pst.setInt(2, currentUser.getId());
+                currentUser.setNewsletter(isNewsLetterChecked);
+                pst.executeUpdate();
+                log.info("SUCESSFULLY UPDATED NEWSLETTERACTIVATION OF CURRENT USER: " + currentUser.getUserName());
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (sameNewsLetterChecked(currentUser.wantsNewsletter(), isNewsLetterChecked)) {
+            //Fehleranzeige "Gleiche wantsNewsLetter eingegeben"
+        }
+    }
+
     public void changeSettingsMail(String newEMail) {
         if (notEmptyInput(newEMail)) {
             if (!sameEMail(currentUser.getEmail(), newEMail)) {
@@ -135,7 +158,7 @@ public class UserDAO implements Serializable {
 
     public void changeSettingsPassword(String newPassword) {
         if (notEmptyInput(newPassword)) {
-            
+
             PreparedStatement pst = null;
             String query = "UPDATE benutzer "
                     + "SET Passwort = ? WHERE userID = ?";
@@ -169,13 +192,27 @@ public class UserDAO implements Serializable {
                 } catch (SQLException ex) {
                     Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else if(sameUserName(currentUser.getUserName(), newUsername)){
+            } else if (sameUserName(currentUser.getUserName(), newUsername)) {
                 // Fehlerannzeige "Gleicher Username eingegeben"
             }
 
         }
 
     }
+    
+    public void deleteUser() {
+        MailService ms = new MailService();
+        ms.mailToAdmin("User deleted his account", "User " + this.currentUser.getFirstName() + " " + this.currentUser.getLastName() + " with the username " + this.currentUser.getUserName() + " deleted his account. If you want to contact him, his last registered mail adress was: " + this.currentUser.getEmail());
+        String sql = "DELETE FROM benutzer WHERE userID = '" + this.getCurrentUser().getId() + "';";
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.execute(sql);
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public boolean notEmptyInput(String input) {
         if (!input.equals("")) {
@@ -206,6 +243,13 @@ public class UserDAO implements Serializable {
     }
     //method for username that already exists in progress
 
+    public boolean sameNewsLetterChecked(boolean oldNewsLetterChecked, boolean newNewsLetterChecked) {
+        if (oldNewsLetterChecked == newNewsLetterChecked) {
+            return true;
+        }
+        return false;
+    }
+
     @PreDestroy
     public void destroy() {
         try {
@@ -218,6 +262,10 @@ public class UserDAO implements Serializable {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+    
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
 }
