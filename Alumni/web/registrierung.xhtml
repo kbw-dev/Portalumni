@@ -19,24 +19,19 @@
     <ui:define name="content">
         <center>
             <h2><strong>Registrierung</strong></h2>
-            <br></br>
+            <br/>
             <h:form>
                 <h:panelGrid columns="2">
                     <h:panelGrid columns="2">
                         <p style="width: 170px;">Vorname: </p>
-                        <!--<h:outputText value="Vorname: " /> -->
                         <h:inputText style="width: 200px;" value="#{registrierungController.vorname}" a:placeholder="Vorname"/>
                         <p style="width: 170px;">Nachname: </p>
-                        <!--<h:outputText value="Nachname: " /> -->
                         <h:inputText style="width: 200px;" value="#{registrierungController.nachname}" a:placeholder="Nachname"/>
-                        <p style="width: 170px;">Email: </p>
-                        <!--<h:outputText value="Email: " /> -->
+                        <p style="width: 170px;">E-mail: </p>
                         <h:inputText style="width: 200px;" value="#{registrierungController.email}" a:placeholder="Email"/>
                         <p style="width: 170px;">Passwort: </p>
-                        <!--<h:outputText value="Passwort: " /> -->
                         <h:inputSecret style="width: 200px;" value="#{registrierungController.passwort1}" a:placeholder="Passwort"/>
                         <p style="width: 170px;">Passwortbestätigung: </p>
-                        <!--<h:outputText value="Passwortbestätigung: " /> -->
                         <h:inputSecret style="width: 200px;" value="#{registrierungController.passwort2}" a:placeholder="Passwortbestätigung"/>                   
                     </h:panelGrid>
                     <h:panelGrid style="border: 1px dotted; font-size: 12px; padding: 5px; width: 170px;">                      
@@ -48,13 +43,11 @@
                         <h:outputLabel value="- Enthält Symbole"/>
                     </h:panelGrid>
                 </h:panelGrid>
-                <br></br>
+                <br/>
                 <h:commandButton onclick="PF('dlg').show();" action="#{registrierungController.anfrageSenden()}" value="Registrieren"/>
-                <br></br>
-                <br></br>
-                    <h:outputText value="#{registrierungController.error}" style="color: red"/>
-                <br></br>
-                <br></br>
+                <br/><br/>
+                <h:outputText value="#{registrierungController.error}" style="color: red"/>
+                <br/><br/>
                 <p>Klicken Sie <h:link class="textbtn" value="hier" outcome="login" />, wenn Sie bereits ein Konto haben.</p>
             </h:form>
             <p:dialog showEffect="slide" widgetVar="dlg" dynamic="true" header="Registrierung" width="250" height="100" >
