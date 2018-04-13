@@ -16,10 +16,22 @@
 
     <ui:define name="content">
         <p>Admin Seite</p>
+        <br/>
+        <p>von ramin</p>
     </ui:define>
-    
-    <h:commandButton onclick="#{adminController()}">
-        
-    </h:commandButton>
 
+    <ui:define name="hallo">
+        <p>image</p>
+    </ui:define>
+
+    <h:form>
+        <h:outputText value="something" />
+    </h:form>
+    <h:form>
+        <h:inputFile value="#{adminController.bImage}" />
+
+        <h:commandButton value="hochladen" onclick="#{adminController.uploadPicture()}">
+
+        </h:commandButton>
+    </h:form>
 </ui:composition>
