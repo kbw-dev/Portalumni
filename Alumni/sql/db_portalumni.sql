@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 16. Mrz 2018 um 16:49
+-- Erstellungszeit: 13. Apr 2018 um 08:15
 -- Server-Version: 10.1.30-MariaDB
 -- PHP-Version: 7.2.2
 
@@ -21,6 +21,23 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `db_portalumni`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `agenda`
+--
+DELETE DATABASE IF EXISTS db_portalumni;
+CREATE DATABASE db_portalumni;
+USE db_portalumni;
+
+CREATE TABLE `agenda` (
+  `beitragID` int(11) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `datum` date NOT NULL,
+  `ort` varchar(255) NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -46,11 +63,10 @@ CREATE TABLE `benutzer` (
 --
 
 INSERT INTO `benutzer` (`userID`, `FirmenVerwaltung_idFirmenVerwaltung`, `Vorname`, `Nachname`, `Username`, `Passwort`, `Email`, `EmailPassword`, `Admin`, `Newsletter`) VALUES
-(1, 1, 'Admin', 'Absolutum', 'adminCool', 'Admin', 'Admin@Admin.ch', '', 1, 1),
 (2, 2, 'Silvan', 'Baach', 'silvBaach', 'Navlis3', 'Navlis@gmx.com', '', 0, 1),
 (3, 2, 'Hannes', 'Kannes', 'hannkannes', 'usg45', 'hannes@hotmail.ch', '', 0, 0),
 (4, 4, 'Markus Maria', 'Von Riedmatten', 'markMaria', 'Rick&Morty99', 'MM99@gmail.com', '', 0, 1),
-(5, 5, 'Adel', 'Patkovic', 'adelooooo', 'adelo', 'adel9@hotmail.ch', 'platzhalter', 1, 1);
+(10, 5, 'Adel', 'Patkovic', 'adelo', 'adel', 'asfF', 'ASGASG', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -103,6 +119,12 @@ INSERT INTO `firmenverwaltung` (`idFirmenVerwaltung`) VALUES
 --
 
 --
+-- Indizes für die Tabelle `agenda`
+--
+ALTER TABLE `agenda`
+  ADD PRIMARY KEY (`beitragID`);
+
+--
 -- Indizes für die Tabelle `benutzer`
 --
 ALTER TABLE `benutzer`
@@ -123,6 +145,16 @@ ALTER TABLE `firma`
 --
 ALTER TABLE `firmenverwaltung`
   ADD PRIMARY KEY (`idFirmenVerwaltung`);
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
+--
+
+--
+-- AUTO_INCREMENT für Tabelle `agenda`
+--
+ALTER TABLE `agenda`
+  MODIFY `beitragID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Constraints der exportierten Tabellen

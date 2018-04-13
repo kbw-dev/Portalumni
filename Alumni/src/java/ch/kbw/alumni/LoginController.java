@@ -1,5 +1,6 @@
 package ch.kbw.alumni;
 
+import ch.kbw.dao.AgendaDAO;
 import ch.kbw.dao.UserDAO;
 import ch.kbw.model.User;
 import java.io.Serializable;
@@ -16,6 +17,8 @@ public class LoginController implements Serializable {
     //INJECTION POINT --> NO NEED FOR INSTANTIATION 
     @Inject
     private UserDAO userDAO;
+    @Inject
+    private AgendaDAO agendaDAO;
     
     private static final long serialVersionUID = -2324232432423423432L;
     private String name, password, input, passwordInput;
@@ -33,6 +36,7 @@ public class LoginController implements Serializable {
         this.message = "";
         this.isLoggedIn = false;
         this.count = 0;
+        
     }
 
     // Methods
@@ -51,7 +55,13 @@ public class LoginController implements Serializable {
             return "login.xhtml?faces-redirect=true";
         }
     }
-
+    public String jumpOutOfAgendaPage(User u){
+        agendaDAO.listAllPosts();
+        if(!u.isAdmin()){
+            return "index.xhtml";
+        }
+        return null;
+    }
     public String logout() {
         this.isLoggedIn = false;
         return "logout.xhtml?faces-redirect=true";
@@ -129,4 +139,6 @@ public class LoginController implements Serializable {
         this.message = message;
     }
 
+    
+    
 }
