@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Adel/Documents/NetBeansProjects/Web/Portalumni/Alumni/src/java/ch/kbw/control/AgendaService.java</file>
             <file>file:/C:/Users/Adel/Documents/NetBeansProjects/Web/Portalumni/Alumni/src/java/ch/kbw/dao/AgendaDAO.java</file>
             <file>file:/C:/Users/Adel/Documents/NetBeansProjects/Web/Portalumni/Alumni/web/adminpage.xhtml</file>
+=======
+            <file>file:/C:/Users/ceizz/Desktop/SchoolProjects/Portalumni/Alumni/web/settings.xhtml</file>
+            <file>file:/C:/Users/ceizz/Desktop/SchoolProjects/Portalumni/Alumni/web/registrierung.xhtml</file>
+>>>>>>> origin/dev
         </group>
     </open-files>
 </project-private>
