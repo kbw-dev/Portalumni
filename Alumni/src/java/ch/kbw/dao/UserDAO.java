@@ -1,8 +1,7 @@
 package ch.kbw.dao;
 
+import ch.kbw.control.MailService;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,77 +10,43 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import ch.kbw.model.User;
+import java.sql.Statement;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 /**
  *
  * @author Adel
  */
 @Named
-@RequestScoped
+@SessionScoped
 public class UserDAO implements Serializable {
-
-    //FOR FURTHER INFORMATION, FOR TESTING
-    private static Logger log = Logger.getLogger(UserDAO.class.getSimpleName());
+    
+    //INJECTION POINT OF OVERALL DATA ACCESS OBJECT
+    @Inject
+    private OverallDAO overallDAO;
     // LIST OF USER
-    private List<User> customers = new ArrayList<>();
+    private List<User> allUsers = new ArrayList<>();
 
-    // DATABASE CONNECTION
-    private Connection connection;
+    // HOLDS THE CURRENT STANDARD USER - JUST FOR TESTING
+    private User currentUser = new User();
 
-    // HOLDS THE CURRENT USER - JUST FOR TESTING
-    private User currentUser = getAllUsers().get(4);
-
-    //GETS INVOKED AFTER CONSTRUCTOR
-    @PostConstruct
-    private void init() {
-
-        log.info("---------- CONNECTION TESTING ------------");
-
-        try {
-            // LOAD DRIVER
-            Class.forName("com.mysql.jdbc.Driver");
-            log.info("the driver is loaded");
-        } catch (ClassNotFoundException e) {
-            log.info("No JDBC Driver found ...");
-            e.printStackTrace();
-        }
-
-        log.info("EVERYTHING OKAY WITH DRIVER");
-
-        try {
-            // CONNECT WITH THE DATABASE db_portalumni
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_portalumni", "root", "");
-
-        } catch (SQLException e) {
-            log.info("Connection Failed!");
-            e.printStackTrace();
-
-        }
-
-        if (connection != null) {
-            log.info("DB CONNECTION OKAY");
-        } else {
-            log.info("Failed to make connection ...");
-
-        }
-    }
+    
 
     public List<User> getAllUsers() {
-        init();
-        customers.clear();
+        overallDAO.init();
+        allUsers.clear();
         ResultSet rs = null;
         PreparedStatement pst = null;
         String query = "Select * from benutzer";
 
         try {
-            pst = connection.prepareStatement(query);
+            pst = overallDAO.getConnection().prepareStatement(query);
             pst.execute();
             rs = pst.getResultSet();
 
@@ -97,7 +62,7 @@ public class UserDAO implements Serializable {
                 user.setEmailPassword(rs.getString(8));
                 user.setAdmin(rs.getBoolean(9));
                 user.setNewsletter(rs.getBoolean(10));
-                customers.add(user);
+                allUsers.add(user);
             }
 
             pst.close();
@@ -106,7 +71,27 @@ public class UserDAO implements Serializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return customers;
+        return allUsers;
+    }
+
+    public void changeSettingsNewsLetterChecked(boolean isNewsLetterChecked) {
+        if (!sameNewsLetterChecked(currentUser.wantsNewsletter(), isNewsLetterChecked)) {
+            PreparedStatement pst = null;
+            String query = "UPDATE benutzer "
+                    + "SET NEWSLETTERCHECKED = ? WHERE userID = ?";
+            try {
+                pst = overallDAO.getConnection().prepareStatement(query);
+                pst.setBoolean(1, isNewsLetterChecked);
+                pst.setInt(2, currentUser.getId());
+                currentUser.setNewsletter(isNewsLetterChecked);
+                pst.executeUpdate();
+                overallDAO.getLog().info("SUCESSFULLY UPDATED NEWSLETTERACTIVATION OF CURRENT USER: " + currentUser.getUserName());
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (sameNewsLetterChecked(currentUser.wantsNewsletter(), isNewsLetterChecked)) {
+            //Fehleranzeige "Gleiche wantsNewsLetter eingegeben"
+        }
     }
 
     public void changeSettingsMail(String newEMail) {
@@ -116,12 +101,12 @@ public class UserDAO implements Serializable {
                 String query = "UPDATE benutzer "
                         + "SET Email = ? WHERE userID = ?";
                 try {
-                    pst = connection.prepareStatement(query);
+                    pst = overallDAO.getConnection().prepareStatement(query);
                     pst.setString(1, newEMail);
                     pst.setInt(2, currentUser.getId());
                     currentUser.setEmail(newEMail);
                     pst.executeUpdate();
-                    log.info("SUCESSFULLY UPDATED EMAIL OF CURRENT USER: " + currentUser.getUserName());
+                    overallDAO.getLog().info("SUCESSFULLY UPDATED EMAIL OF CURRENT USER: " + currentUser.getUserName());
                 } catch (SQLException ex) {
                     Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -135,17 +120,17 @@ public class UserDAO implements Serializable {
 
     public void changeSettingsPassword(String newPassword) {
         if (notEmptyInput(newPassword)) {
-            
+
             PreparedStatement pst = null;
             String query = "UPDATE benutzer "
                     + "SET Passwort = ? WHERE userID = ?";
             try {
-                pst = connection.prepareStatement(query);
+                pst = overallDAO.getConnection().prepareStatement(query);
                 pst.setString(1, newPassword);
                 pst.setInt(2, currentUser.getId());
                 currentUser.setPassword(newPassword);
                 pst.executeUpdate();
-                log.info("SUCESSFULLY UPDATED PASSWORD OF CURRENT USER: " + currentUser.getUserName());
+                overallDAO.getLog().info("SUCESSFULLY UPDATED PASSWORD OF CURRENT USER: " + currentUser.getUserName());
             } catch (SQLException ex) {
                 Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -160,22 +145,36 @@ public class UserDAO implements Serializable {
                 String query = "UPDATE benutzer "
                         + "SET Username = ? WHERE userID = ?";
                 try {
-                    pst = connection.prepareStatement(query);
+                    pst = overallDAO.getConnection().prepareStatement(query);
                     pst.setString(1, newUsername);
                     pst.setInt(2, currentUser.getId());
                     currentUser.setUserName(newUsername);
                     pst.executeUpdate();
-                    log.info("SUCESSFULLY UPDATED USERNAME OF CURRENT USER: " + currentUser.getFirstName());
+                    overallDAO.getLog().info("SUCESSFULLY UPDATED USERNAME OF CURRENT USER: " + currentUser.getFirstName());
                 } catch (SQLException ex) {
                     Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }else if(sameUserName(currentUser.getUserName(), newUsername)){
+            } else if (sameUserName(currentUser.getUserName(), newUsername)) {
                 // Fehlerannzeige "Gleicher Username eingegeben"
             }
 
         }
 
     }
+    
+    public void deleteUser() {
+        MailService ms = new MailService();
+        ms.mailToAdmin("User deleted his account", "User " + this.currentUser.getFirstName() + " " + this.currentUser.getLastName() + " with the username " + this.currentUser.getUserName() + " deleted his account. If you want to contact him, his last registered mail adress was: " + this.currentUser.getEmail());
+        String sql = "DELETE FROM benutzer WHERE userID = '" + this.getCurrentUser().getId() + "';";
+        try {
+            Statement stmt = overallDAO.getConnection().createStatement();
+            stmt.execute(sql);
+            overallDAO.getConnection().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public boolean notEmptyInput(String input) {
         if (!input.equals("")) {
@@ -206,10 +205,17 @@ public class UserDAO implements Serializable {
     }
     //method for username that already exists in progress
 
+    public boolean sameNewsLetterChecked(boolean oldNewsLetterChecked, boolean newNewsLetterChecked) {
+        if (oldNewsLetterChecked == newNewsLetterChecked) {
+            return true;
+        }
+        return false;
+    }
+
     @PreDestroy
     public void destroy() {
         try {
-            connection.close();
+            overallDAO.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -218,6 +224,10 @@ public class UserDAO implements Serializable {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+    
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
 }

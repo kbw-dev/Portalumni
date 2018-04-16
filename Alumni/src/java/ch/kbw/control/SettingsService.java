@@ -26,6 +26,9 @@ public class SettingsService {
     private String newUserName;
     private String newPassword;
     private String againNewPassword;
+    private boolean newsLetterChecked;
+    
+    
 
     public void saveSettings() {
 
@@ -37,7 +40,11 @@ public class SettingsService {
         
 
     }
-
+    
+    public void deleteUser(){
+        userDAO.deleteUser();
+    }
+    
     public String getNewEMail() {
         return newEMail;
     }
@@ -68,6 +75,20 @@ public class SettingsService {
 
     public void setAgainNewPassword(String againNewPassword) {
         this.againNewPassword = againNewPassword;
+    }
+
+    /**
+     * @return the newsLetterChecked
+     */
+    public boolean isNewsLetterChecked() {
+        return newsLetterChecked;
+    }
+
+    /**
+     * @param newsLetterChecked the newsLetterChecked to set
+     */
+    public void setNewsLetterChecked(boolean newsLetterChecked) {
+        this.newsLetterChecked = newsLetterChecked;
     }
 
 }

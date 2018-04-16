@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="./templates/standardTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="nav">
+        <li><h:link class="align-right" value="Registrierung" outcome="registrierung" /></li>
+        <li><h:link class="align-right" value="Fotogalerie" outcome="fotogalerie" /></li>
+        <li><h:link class="align-right" value="Events" outcome="events" /></li>
+        <li><h:link class="align-right" value="News" outcome="news" /></li>
+        <li><h:link class="align-right" value="Home" outcome="index" /></li>
+    </ui:define>
+
+    <ui:define name="content">
+<<<<<<< HEAD
+        <p>Admin Seite</p>
+        <br/>
+        <p>von ramin</p>
+    </ui:define>
+
+    <ui:define name="hallo">
+        <p>image</p>
+    </ui:define>
+
+    <h:form>
+        <h:outputText value="something" />
+    </h:form>
+    <h:form>
+        <h:inputFile value="#{adminController.bImage}" />
+
+        <h:commandButton value="hochladen" onclick="#{adminController.uploadPicture()}">
+
+        </h:commandButton>
+    </h:form>
+</ui:composition>
+=======
+
+        <h:form id="form">
+            <f:metadata>
+                <f:viewAction action="#{loginController.jumpOutOfAgendaPage(userDAO.currentUser)}" />
+            </f:metadata>
+
+            <h:outputLabel value="Titel: "></h:outputLabel>
+            <h:inputText id="title" value="#{agendaService.title}"></h:inputText>
+            <br></br>
+            <h:outputLabel for="popup" value="Datum: "></h:outputLabel>
+            <p:calendar id="popup" value="#{agendaService.date}" />
+            <br></br>
+            <h:outputLabel value="Ort: "></h:outputLabel>
+            <h:inputText id="place" value="#{agendaService.place}"></h:inputText>
+            <br></br>
+            <h:outputLabel value="Inhalt: "></h:outputLabel>
+            <h:inputTextarea id="content" value="#{agendaService.content}"></h:inputTextarea>
+            <br></br>
+            <h:commandButton value="Veroeffentlichen" type="submit" action="#{agendaService.createNewPost()}" />
+
+
+            <p:growl id="growl" showDetail="true" sticky="false" />
+            <h:outputText value="#{agendaService.date}">
+                <f:convertDateTime pattern="dd.MM.yyyy" timeZone="GMT+2"/>
+            </h:outputText>
+            <p:dataList id="list" value="#{agendaDAO.posts}" var="post" type="ordered">
+                <p:panel id="basic"  footer="von #{userDAO.currentUser.firstName}" style="margin-bottom:20px">
+                    <f:facet  name="header">
+                        <p:inplace editor="true">
+                            <p:ajax event="save" listener="#{agendaService.editPost(post)}"/>
+                            <p:inputText value="#{post.title}"/>
+                        </p:inplace>
+
+
+                        <p:commandButton id="button" value="Löschen" immediate="true" style="float: right;" actionListener="#{agendaService.deletePost(post)}" update=":form:growl">
+                            <f:ajax execute="#{agendaService.updateList()}" render="list" listener="#{agendaService.deletePost(post)}"/>
+                        </p:commandButton>
+
+
+                    </f:facet>
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:inplace editor="true">
+                            <p:ajax event="save" listener="#{agendaService.editPost(post)}"/>
+                            <p:inputTextarea value="#{post.content}" />
+                        </p:inplace>
+
+                    </h:panelGrid>
+                </p:panel>
+            </p:dataList>
+            <p:dataTable var="" value="">
+                <p:column headerText="Vorname">
+                    <h:outputText value="Max" />
+                </p:column>
+
+                <p:column headerText="Nachname">
+                    <h:outputText value="Mustermann" />
+                </p:column>
+
+                <p:column headerText="Email">
+                    <h:outputText value="max.mustermann@megamail.com" />
+                </p:column>
+
+                <p:column headerText="Controls">
+                    <h:commandButton value="Zulassen" />
+                    <h:commandButton value="Ablehnen" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+>>>>>>> 0b00b2f6c478b2e8aa6f54b0dcd8b7620327b569

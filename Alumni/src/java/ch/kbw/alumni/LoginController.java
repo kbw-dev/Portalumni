@@ -1,24 +1,27 @@
 package ch.kbw.alumni;
 
+import ch.kbw.dao.AgendaDAO;
 import ch.kbw.dao.UserDAO;
 import ch.kbw.model.User;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Random;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
+// LET IT BE SESSIONSCOPED
 @SessionScoped
 public class LoginController implements Serializable {
-
+    
+    //INJECTION POINT --> NO NEED FOR INSTANTIATION 
+    @Inject
+    private UserDAO userDAO;
+    @Inject
+    private AgendaDAO agendaDAO;
+    
     private static final long serialVersionUID = -2324232432423423432L;
     private String name, password, input, passwordInput;
-
     private boolean isLoggedIn;
     private String message;
     //private ArrayList<Address> adresse = new ArrayList<>();
@@ -26,35 +29,41 @@ public class LoginController implements Serializable {
     private String output, property, progress;
     private boolean hide = true;
     int i = 0;
-    UserDAO userDao = new UserDAO();
-    ArrayList<User> users = new ArrayList<>();
 
     public LoginController() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        super();
-        name = null;
-        password = null;
-        isLoggedIn = false;
-        //adresse.add(new Address(0, "", ""));
-        message = "";
-        count = 0;
-        users = (ArrayList<User>) userDao.getAllUsers();
+        this.name = "";
+        this.password = "";
+        this.message = "";
+        this.isLoggedIn = false;
+        this.count = 0;
+        
     }
 
-    // Methodes
+    // Methods
     public String checkUser() {
 
         if (checkAccount() && !getName().equals("")) {
             isLoggedIn = true;
-            message = "Sie sind eingeloggt!";
+            this.message = "Sie sind eingeloggt!";
+            this.name = "";
+            this.password = "";
             return "index.xhtml?faces-redirect=true";
         } else {
-            message = "Ihr Loginname oder Ihr Passwort ist falsch!";
+            this.message = "Ihr Loginname oder Ihr Passwort ist falsch!";
+            this.name = "";
+            this.password = "";
             return "login.xhtml?faces-redirect=true";
         }
     }
-
+    public String jumpOutOfAgendaPage(User u){
+        agendaDAO.listAllPosts();
+        if(!u.isAdmin()){
+            return "index.xhtml";
+        }
+        return null;
+    }
     public String logout() {
-        isLoggedIn = false;
+        this.isLoggedIn = false;
         return "logout.xhtml?faces-redirect=true";
     }
 
@@ -94,10 +103,11 @@ public class LoginController implements Serializable {
     }
 
     private boolean checkAccount() {
-        if (users.size() != 0) {
-            for (User user : users) {
+        if (!userDAO.getAllUsers().isEmpty()) {
+            for (User user : userDAO.getAllUsers()) {
                 System.out.println(user.getUserName());
                 if (getName().equals(user.getUserName()) && getPassword().equals(user.getPassword())) {
+                    userDAO.setCurrentUser(user);
                     return true;
                 }
             }
@@ -129,4 +139,6 @@ public class LoginController implements Serializable {
         this.message = message;
     }
 
+    
+    
 }

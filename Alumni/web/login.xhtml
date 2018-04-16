@@ -8,7 +8,7 @@
                 template="./templates/standardTemplate.xhtml">
 
     <ui:define name="nav">
-        <li><h:link id="active" class="align-right" value="Login" outcome="login" /></li>
+        <li><h:link id="active" class="align-right" value="Registrierung" outcome="registrierung" /></li>
         <li><h:link class="align-right" value="Fotogalerie" outcome="fotogalerie" /></li>
         <li><h:link class="align-right" value="Events" outcome="events" /></li>
         <li><h:link class="align-right" value="News" outcome="news" /></li>
@@ -16,39 +16,22 @@
     </ui:define>
 
     <ui:define name="content">
-        <p>Login Seite</p>
-        <h:outputText style="font-weight:bold" value="Login" />
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputText value="Name: " />
-                <h:inputText value="#{loginController.name}" />
-
-                <h:outputText value="Password: " />
-                <h:inputSecret value="#{loginController.password}" />
-            </h:panelGrid>
-            <h:commandButton action="#{loginController.checkUser()}" value="Login"/>
-            <p style="color:red;">#{loginController.message}</p>
-            <br></br>
-            <!-- Adels Teil -->
-<!--            <h:commandButton action="#{loginService.goToMailing()}" value="Mailing"/>
-            <h:commandButton action="#{loginService.goToSettings()}" value="Einstellungen"/>
-             <h:dataTable var="user" value="#{userService.selectAllUser()}">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="First Name" />
-                </f:facet>
-                <h:outputText value="#{user.firstName}" />
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Last Name" />
-                </f:facet>
-                <h:outputText value="#{user.lastName}" />
-            </h:column>
-
-        </h:dataTable>-->
-        </h:form>
-        
+        <center>
+            <h2><strong>Login</strong></h2>
+            <br/>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <p style="width: 150px;">Username: </p>
+                    <h:inputText style="width: 150px;" value="#{loginController.name}" />
+                    <p style="width: 150px;">Passwort: </p>
+                    <h:inputSecret style="width: 150px;" value="#{loginController.password}" />
+                </h:panelGrid>
+                <br/>
+                <h:commandButton action="#{loginController.checkUser()}" value="Login"/>
+                <br/><br/>
+                <h:outputText value="#{loginController.message}" style="color: red"/>
+            </h:form>
+        </center>
     </ui:define>
 
 </ui:composition>
