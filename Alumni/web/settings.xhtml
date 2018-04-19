@@ -17,6 +17,9 @@
     
     <ui:define name="content">
         <h:form>
+            <f:metadata>
+                <f:viewAction action="#{accessController.jumpOutOfPageByAccess(userDAO.currentUser)}" />
+            </f:metadata>
             <h:outputLabel value="Neue E-Mail: "></h:outputLabel>
             <h:inputText id="email" value="#{settingsService.newEMail}"></h:inputText>
             <br></br>
