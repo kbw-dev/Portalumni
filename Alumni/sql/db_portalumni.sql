@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 16. Mrz 2018 um 16:49
+-- Erstellungszeit: 20. Apr 2018 um 08:55
 -- Server-Version: 10.1.30-MariaDB
 -- PHP-Version: 7.2.2
 
@@ -25,6 +25,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `agenda`
+--
+
+CREATE TABLE `agenda` (
+  `beitragID` int(11) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `datum` date NOT NULL,
+  `ort` varchar(255) NOT NULL,
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `agenda`
+--
+
+INSERT INTO `agenda` (`beitragID`, `title`, `datum`, `ort`, `content`) VALUES
+(1, 'yxgadgd', '2018-04-27', 'asgsag', 'sagasgsagsagsa');
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `benutzer`
 --
 
@@ -38,19 +59,19 @@ CREATE TABLE `benutzer` (
   `Email` varchar(45) NOT NULL,
   `EmailPassword` varchar(100) NOT NULL,
   `Admin` tinyint(1) NOT NULL,
-  `Newsletter` tinyint(1) NOT NULL
+  `Newsletter` tinyint(1) NOT NULL,
+  `zugelassen` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `benutzer`
 --
 
-INSERT INTO `benutzer` (`userID`, `FirmenVerwaltung_idFirmenVerwaltung`, `Vorname`, `Nachname`, `Username`, `Passwort`, `Email`, `EmailPassword`, `Admin`, `Newsletter`) VALUES
-(1, 1, 'Admin', 'Absolutum', 'adminCool', 'Admin', 'Admin@Admin.ch', '', 1, 1),
-(2, 2, 'Silvan', 'Baach', 'silvBaach', 'Navlis3', 'Navlis@gmx.com', '', 0, 1),
-(3, 2, 'Hannes', 'Kannes', 'hannkannes', 'usg45', 'hannes@hotmail.ch', '', 0, 0),
-(4, 4, 'Markus Maria', 'Von Riedmatten', 'markMaria', 'Rick&Morty99', 'MM99@gmail.com', '', 0, 1),
-(5, 5, 'Adel', 'Patkovic', 'adelooooo', 'adelo', 'adel9@hotmail.ch', 'platzhalter', 1, 1);
+INSERT INTO `benutzer` (`userID`, `FirmenVerwaltung_idFirmenVerwaltung`, `Vorname`, `Nachname`, `Username`, `Passwort`, `Email`, `EmailPassword`, `Admin`, `Newsletter`, `zugelassen`) VALUES
+(2, 2, 'Silvan', 'Baach', 'silvBaach', 'Navlis3', 'Navlis@gmx.com', '', 0, 1, 1),
+(10, 5, 'Adel', 'Patkovic', 'adelo', 'adel', 'asfF', 'ASGASG', 1, 1, 1),
+(345, 3, 'Maxime', 'Mustermann', 'aslfasölgkö', 'asgsgsa', 'asgasgsa', 'asgsgagsa', 0, 0, 0),
+(690, 5, 'Maxi', 'Mustermann', 'maxiMusti', 'KSFKÖLSAKF', 'asffaga', 'asgasg', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -103,6 +124,12 @@ INSERT INTO `firmenverwaltung` (`idFirmenVerwaltung`) VALUES
 --
 
 --
+-- Indizes für die Tabelle `agenda`
+--
+ALTER TABLE `agenda`
+  ADD PRIMARY KEY (`beitragID`);
+
+--
 -- Indizes für die Tabelle `benutzer`
 --
 ALTER TABLE `benutzer`
@@ -123,6 +150,16 @@ ALTER TABLE `firma`
 --
 ALTER TABLE `firmenverwaltung`
   ADD PRIMARY KEY (`idFirmenVerwaltung`);
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
+--
+
+--
+-- AUTO_INCREMENT für Tabelle `agenda`
+--
+ALTER TABLE `agenda`
+  MODIFY `beitragID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints der exportierten Tabellen
