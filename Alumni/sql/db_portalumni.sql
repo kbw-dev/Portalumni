@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 13. Apr 2018 um 08:15
+-- Erstellungszeit: 20. Apr 2018 um 08:55
 -- Server-Version: 10.1.30-MariaDB
 -- PHP-Version: 7.2.2
 
@@ -27,14 +27,6 @@ SET time_zone = "+00:00";
 --
 -- Tabellenstruktur für Tabelle `agenda`
 --
-<<<<<<< HEAD
-
-
-=======
-DROP DATABASE IF EXISTS db_portalumni;
-CREATE DATABASE db_portalumni;
->>>>>>> c47ec2cd326eda1a73e734c298f17bdf7b5d9ef8
-USE db_portalumni;
 
 CREATE TABLE `agenda` (
   `beitragID` int(11) NOT NULL,
@@ -43,6 +35,13 @@ CREATE TABLE `agenda` (
   `ort` varchar(255) NOT NULL,
   `content` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `agenda`
+--
+
+INSERT INTO `agenda` (`beitragID`, `title`, `datum`, `ort`, `content`) VALUES
+(1, 'yxgadgd', '2018-04-27', 'asgsag', 'sagasgsagsagsa');
 
 -- --------------------------------------------------------
 
@@ -60,18 +59,19 @@ CREATE TABLE `benutzer` (
   `Email` varchar(45) NOT NULL,
   `EmailPassword` varchar(100) NOT NULL,
   `Admin` tinyint(1) NOT NULL,
-  `Newsletter` tinyint(1) NOT NULL
+  `Newsletter` tinyint(1) NOT NULL,
+  `zugelassen` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `benutzer`
 --
 
-INSERT INTO `benutzer` (`userID`, `FirmenVerwaltung_idFirmenVerwaltung`, `Vorname`, `Nachname`, `Username`, `Passwort`, `Email`, `EmailPassword`, `Admin`, `Newsletter`) VALUES
-(2, 2, 'Silvan', 'Baach', 'silvBaach', 'Navlis3', 'Navlis@gmx.com', '', 0, 1),
-(3, 2, 'Hannes', 'Kannes', 'hannkannes', 'usg45', 'hannes@hotmail.ch', '', 0, 0),
-(4, 4, 'Markus Maria', 'Von Riedmatten', 'markMaria', 'Rick&Morty99', 'MM99@gmail.com', '', 0, 1),
-(10, 5, 'Adel', 'Patkovic', 'adelo', 'adel', 'asfF', 'ASGASG', 1, 1);
+INSERT INTO `benutzer` (`userID`, `FirmenVerwaltung_idFirmenVerwaltung`, `Vorname`, `Nachname`, `Username`, `Passwort`, `Email`, `EmailPassword`, `Admin`, `Newsletter`, `zugelassen`) VALUES
+(2, 2, 'Silvan', 'Baach', 'silvBaach', 'Navlis3', 'Navlis@gmx.com', '', 0, 1, 1),
+(10, 5, 'Adel', 'Patkovic', 'adelo', 'adel', 'asfF', 'ASGASG', 1, 1, 1),
+(345, 3, 'Maxime', 'Mustermann', 'aslfasölgkö', 'asgsgsa', 'asgasgsa', 'asgsgagsa', 0, 0, 0),
+(690, 5, 'Maxi', 'Mustermann', 'maxiMusti', 'KSFKÖLSAKF', 'asffaga', 'asgasg', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -159,7 +159,7 @@ ALTER TABLE `firmenverwaltung`
 -- AUTO_INCREMENT für Tabelle `agenda`
 --
 ALTER TABLE `agenda`
-  MODIFY `beitragID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `beitragID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints der exportierten Tabellen
