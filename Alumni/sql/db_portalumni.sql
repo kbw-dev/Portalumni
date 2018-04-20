@@ -27,8 +27,13 @@ SET time_zone = "+00:00";
 --
 -- Tabellenstruktur für Tabelle `agenda`
 --
+<<<<<<< HEAD
 
 
+=======
+DROP DATABASE IF EXISTS db_portalumni;
+CREATE DATABASE db_portalumni;
+>>>>>>> c47ec2cd326eda1a73e734c298f17bdf7b5d9ef8
 USE db_portalumni;
 
 CREATE TABLE `agenda` (

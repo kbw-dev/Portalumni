@@ -52,6 +52,7 @@ public class AgendaDAO implements Serializable {
     }
 
     public Set<Post> listAllPosts() {
+        
         ResultSet rs = null;
         PreparedStatement pst = null;
         String query = "Select * from agenda";
@@ -99,18 +100,21 @@ public class AgendaDAO implements Serializable {
 
     }
 
-    public void makeChanges(Post post, String newContent, String newTitle) {
+    public void makeChanges(Post post, String newContent, String newTitle, String newPlace) {
         PreparedStatement pst = null;
         String query = "UPDATE agenda "
-                + "SET content = ?, title = ? WHERE beitragID = ?";
+                + "SET content = ?, title = ?, ort = ? WHERE beitragID = ?";
         try {
             pst = overallDAO.getConnection().prepareStatement(query);
             pst.setString(1, newContent);
             pst.setString(2, newTitle);
-            pst.setInt(3, post.getPostID());
+            pst.setString(3, newPlace);
+            pst.setInt(4, post.getPostID());
             
             post.setContent(newContent);
             post.setTitle(newTitle);
+            post.setPlace(newPlace);
+            
             pst.executeUpdate();
             overallDAO.getLog().info("SUCESSFULLY UPDATED POST WITH A NEW CONTENT: " + post.getContent());
         } catch (SQLException ex) {
@@ -119,8 +123,6 @@ public class AgendaDAO implements Serializable {
         
     }
 
-    public Set<Post> getPosts() {
-        return posts;
-    }
+    
 
 }

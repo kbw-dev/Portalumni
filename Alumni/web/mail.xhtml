@@ -4,7 +4,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                template="./templates/standardTemplate.xhtml">
+                template="./templates/standardTemplate.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="nav">
         <li><h:link class="align-right" value="Registrierung" outcome="registrierung" /></li>
@@ -16,6 +17,9 @@
 
     <ui:define name="content">
         <h:form>
+            <f:metadata>
+                <f:viewAction action="#{accessController.jumpOutOfPageByAccess(userDAO.currentUser)}" />
+            </f:metadata>
             <h:outputLabel value="Betreff: "></h:outputLabel>
             <h:inputText id="header" value="#{mailService.mailHeader}"></h:inputText>
             <br></br>

@@ -17,7 +17,7 @@
     </ui:define>
 
     <ui:define name="content">
-<<<<<<< HEAD
+
         <p>Admin Seite</p>
         <br/>
         <p>von ramin</p>
@@ -38,76 +38,96 @@
         </h:commandButton>
     </h:form>
 </ui:composition>
-=======
 
         <h:form id="form">
             <f:metadata>
-                <f:viewAction action="#{loginController.jumpOutOfAgendaPage(userDAO.currentUser)}" />
+                <f:viewAction action="#{accessController.jumpOutOfPageByAccess(userDAO.currentUser)}" />
             </f:metadata>
-
+            
+            <h1>Beiträge verfassen</h1>
             <h:outputLabel value="Titel: "></h:outputLabel>
-            <h:inputText id="title" value="#{agendaService.title}"></h:inputText>
+            <p:inputText id="title" value="#{agendaService.title}"></p:inputText>
             <br></br>
-            <h:outputLabel for="popup" value="Datum: "></h:outputLabel>
+            <p:outputLabel for="popup" value="Datum: "></p:outputLabel>
             <p:calendar id="popup" value="#{agendaService.date}" />
             <br></br>
-            <h:outputLabel value="Ort: "></h:outputLabel>
-            <h:inputText id="place" value="#{agendaService.place}"></h:inputText>
+            <p:outputLabel value="Ort: "></p:outputLabel>
+            <p:inputText id="place" value="#{agendaService.place}"></p:inputText>
             <br></br>
             <h:outputLabel value="Inhalt: "></h:outputLabel>
-            <h:inputTextarea id="content" value="#{agendaService.content}"></h:inputTextarea>
+
+            <p:editor id="editor" widgetVar="editorWidget" value="#{agendaService.content}" width="600" />
             <br></br>
-            <h:commandButton value="Veroeffentlichen" type="submit" action="#{agendaService.createNewPost()}" />
+            <h:commandButton value="Veroeffentlichen" type="submit" action="#{agendaService.createNewPost()}"/>
 
-
+            <h1>Alle Beiträge</h1>
             <p:growl id="growl" showDetail="true" sticky="false" />
             <h:outputText value="#{agendaService.date}">
                 <f:convertDateTime pattern="dd.MM.yyyy" timeZone="GMT+2"/>
             </h:outputText>
-            <p:dataList id="list" value="#{agendaDAO.posts}" var="post" type="ordered">
-                <p:panel id="basic"  footer="von #{userDAO.currentUser.firstName}" style="margin-bottom:20px">
-                    <f:facet  name="header">
+
+            <p:dataList id="list" value="#{agendaService.selectAllPosts()}" var="post" type="ordered" emptyMessage="Keine Einträge zurzeit">
+
+                <p:panel id="basic"  style="margin-bottom:20px">
+                    <f:facet name="header">
                         <p:inplace editor="true">
-                            <p:ajax event="save" listener="#{agendaService.editPost(post)}"/>
+                            <p:ajax event="save" listener="#{agendaService.editPost(post)}" update=":form:growl"/>
                             <p:inputText value="#{post.title}"/>
                         </p:inplace>
 
-
-                        <p:commandButton id="button" value="Löschen" immediate="true" style="float: right;" actionListener="#{agendaService.deletePost(post)}" update=":form:growl">
-                            <f:ajax execute="#{agendaService.updateList()}" render="list" listener="#{agendaService.deletePost(post)}"/>
+                        <p:commandButton id="button" value="Löschen" immediate="true" style="float: right;" update=":form:growl">
+                            <f:ajax render="list" listener="#{agendaService.deletePost(post)}"/>
                         </p:commandButton>
+                    </f:facet>
+                    <f:facet name="footer">
+                        <p:outputLabel value="von #{userDAO.currentUser.userName} und findet statt in: "/>
+                        <p:inplace editor="true">
 
+                            <p:ajax event="save" listener="#{agendaService.editPost(post)}" update=":form:growl"/>
+                            <p:inputText value="#{post.place}"/>
+
+                        </p:inplace>
+                       
 
                     </f:facet>
-                    <h:panelGrid columns="2" cellpadding="10">
+                    
+                    <h:panelGrid columns="2" cellpadding="5">
                         <p:inplace editor="true">
-                            <p:ajax event="save" listener="#{agendaService.editPost(post)}"/>
-                            <p:inputTextarea value="#{post.content}" />
+                            <p:ajax event="save" listener="#{agendaService.editPost(post)}" update=":form:growl"/>
+                            <p:editor value="#{post.content}" />
                         </p:inplace>
 
                     </h:panelGrid>
                 </p:panel>
             </p:dataList>
-            <p:dataTable var="" value="">
+
+            <h1>Neuzugänge verwalten</h1>
+            <p:dataTable id="table" var="user" value="#{userService.selectAllNonAllowedUsers()}" emptyMessage="Keine neuen User zurzeit">
                 <p:column headerText="Vorname">
-                    <h:outputText value="Max" />
+                    <h:outputText value="#{user.firstName}" />
                 </p:column>
 
                 <p:column headerText="Nachname">
-                    <h:outputText value="Mustermann" />
+                    <h:outputText value="#{user.lastName}" />
                 </p:column>
 
                 <p:column headerText="Email">
-                    <h:outputText value="max.mustermann@megamail.com" />
+                    <h:outputText value="#{user.email}" />
                 </p:column>
 
                 <p:column headerText="Controls">
-                    <h:commandButton value="Zulassen" />
-                    <h:commandButton value="Ablehnen" />
+
+                    <h:commandButton id="allowButton" value="Zulassen" immediate="true" actionListener="#{userService.allow(user)}">
+
+                    </h:commandButton>
+                    <h:commandButton id="denyButton" value="Ablehnen" immediate="true" actionListener="#{userService.deny(user)}">
+
+                    </h:commandButton>
+
                 </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>
 
 </ui:composition>
->>>>>>> 0b00b2f6c478b2e8aa6f54b0dcd8b7620327b569
+

@@ -4,7 +4,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                template="./templates/standardTemplate.xhtml">
+                template="./templates/standardTemplate.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="nav">
         <li><h:link rendered="#{loginController.loggedIn==false}" class="align-right" value="Registrierung" outcome="registrierung" /></li>
@@ -16,6 +17,11 @@
     </ui:define>
 
     <ui:define name="content">
+        <h:form id="form1">
+            <f:metadata>
+                <f:viewAction action="#{accessController.jumpOutOfPageByAccess(userDAO.currentUser)}" />
+            </f:metadata>
+        </h:form>
         <div class="info1">
             <h3>Box 1</h3>
             <p></p>

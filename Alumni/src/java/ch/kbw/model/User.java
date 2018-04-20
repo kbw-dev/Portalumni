@@ -21,8 +21,9 @@ public class User {
     private String emailPassword;
     private boolean admin;
     private boolean newsletter;
+    private boolean isAllowed;
 
-    public User(int userID, int companyManagementID, String firstName, String lastName, String userName, String password, String email, String emailPassword, boolean admin, boolean newsletter) {
+    public User(int userID, int companyManagementID, String firstName, String lastName, String userName, String password, String email, String emailPassword, boolean admin, boolean newsletter, boolean isAllowed) {
         this.userID = userID;
         this.companyManagementID = companyManagementID;
         this.firstName = firstName;
@@ -33,6 +34,7 @@ public class User {
         this.emailPassword = emailPassword;
         this.admin = admin;
         this.newsletter = newsletter;
+        this.isAllowed = isAllowed;
     }
     public User(){
         
@@ -118,6 +120,14 @@ public class User {
 
     public void setNewsletter(boolean newsletter) {
         this.newsletter = newsletter;
+    }
+
+    public boolean isIsAllowed() {
+        return isAllowed;
+    }
+
+    public void setIsAllowed(boolean isAllowed) {
+        this.isAllowed = isAllowed;
     }
     
     

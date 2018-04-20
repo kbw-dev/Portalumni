@@ -32,7 +32,7 @@ public class UserDAO implements Serializable {
     private OverallDAO overallDAO;
     // LIST OF USER
     private List<User> allUsers = new ArrayList<>();
-
+    
     // HOLDS THE CURRENT STANDARD USER - JUST FOR TESTING
     private User currentUser = new User();
 
@@ -62,6 +62,7 @@ public class UserDAO implements Serializable {
                 user.setEmailPassword(rs.getString(8));
                 user.setAdmin(rs.getBoolean(9));
                 user.setNewsletter(rs.getBoolean(10));
+                user.setIsAllowed(rs.getBoolean(11));
                 allUsers.add(user);
             }
 
@@ -173,6 +174,50 @@ public class UserDAO implements Serializable {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void deleteUser(User user){
+        //THATS SOME GENIUS SHIT 
+        allowUser(user);
+        PreparedStatement pst = null;
+        String query = "DELETE FROM benutzer WHERE userID = ?";
+        try {
+            pst = overallDAO.getConnection().prepareStatement(query);
+            pst.setInt(1, user.getId());
+            pst.executeUpdate();
+            overallDAO.getLog().info("USER WITH THE USERNAME " + user.getUserName() + " WAS DENIED FROM THE ADMIN AND DELETED FROM THE DATABASE");
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    public void allowUser(User user){
+        PreparedStatement pst = null;
+        String query = "UPDATE benutzer "
+                        + "SET zugelassen = ? WHERE userID = ?";
+        try {
+            pst = overallDAO.getConnection().prepareStatement(query);
+            pst.setBoolean(1, true);
+            pst.setInt(2, user.getId());
+            user.setIsAllowed(true);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
+    public void denyUser(User user){
+        
+        deleteUser(user);
+    }
+    public List<User> getAllNotAllowedPersons(){
+        List<User> nonAllowedPersons = new ArrayList<>();
+        for(User c : allUsers){
+            if(!c.isIsAllowed()){
+                nonAllowedPersons.add(c);
+            }
+        }
+        return nonAllowedPersons;
     }
     
 
