@@ -38,6 +38,8 @@ public class LoginController implements Serializable {
         this.count = 0;
         
     }
+    
+    
 
     // Methods
     public String checkUser() {
@@ -64,6 +66,8 @@ public class LoginController implements Serializable {
     }
     public String logout() {
         this.isLoggedIn = false;
+        userDAO.setCurrentUser(null);
+        this.message = "Sie sind ausgeloggt!";
         return "logout.xhtml?faces-redirect=true";
     }
 

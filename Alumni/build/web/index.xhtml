@@ -7,7 +7,8 @@
                 template="./templates/standardTemplate.xhtml">
 
     <ui:define name="nav">
-        <li><h:link class="align-right" value="Registrierung" outcome="registrierung" /></li>
+        <li><h:link rendered="#{loginController.loggedIn==false}" class="align-right" value="Registrierung" outcome="registrierung" /></li>
+        <li><h:link rendered="#{loginController.loggedIn==true}" class="align-right" value="Logout" outcome="login" /></li>
         <li><h:link class="align-right" value="Fotogalerie" outcome="fotogalerie" /></li>
         <li><h:link class="align-right" value="Events" outcome="events" /></li>
         <li><h:link class="align-right" value="News" outcome="news" /></li>

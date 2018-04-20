@@ -17,9 +17,10 @@
 
     <ui:define name="content">
         <center>
-            <h2><strong>Login</strong></h2>
+            <h2><strong><h:outputText value="Login"  rendered="#{loginController.loggedIn==false}"/></strong></h2>
+            <h2><strong><h:outputText value="Logout"  rendered="#{loginController.loggedIn==true}"/></strong></h2>
             <br/>
-            <h:form>
+            <h:form  rendered="#{loginController.loggedIn==false}" >
                 <h:panelGrid columns="2">
                     <p style="width: 150px;">Username: </p>
                     <h:inputText style="width: 150px;" value="#{loginController.name}" />
@@ -30,7 +31,16 @@
                 <h:commandButton action="#{loginController.checkUser()}" value="Login"/>
                 <br/><br/>
                 <h:outputText value="#{loginController.message}" style="color: red"/>
+                
             </h:form>
+            <h:form  rendered="#{loginController.loggedIn==true}" >
+                
+                <h:commandButton action="#{loginController.logout()}" value="Logout"/>
+                <br/><br/>
+                <h:outputText value="#{loginController.message}" style="color: red"/>
+                
+            </h:form>
+            
         </center>
     </ui:define>
 
